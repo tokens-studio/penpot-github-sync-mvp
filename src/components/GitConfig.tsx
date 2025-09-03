@@ -4,9 +4,10 @@ import { GitConfig } from '../services/gitService';
 interface GitConfigProps {
   onConfigSave: (config: GitConfig) => void;
   currentConfig?: GitConfig | null;
+  onShowToast?: (message: string, type: 'success' | 'error' | 'warning' | 'info') => void;
 }
 
-const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentConfig }) => {
+const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentConfig, onShowToast }) => {
   const [repoUrl, setRepoUrl] = useState(currentConfig?.repoUrl || '');
   const [token, setToken] = useState(currentConfig?.token || '');
   const [username, setUsername] = useState(currentConfig?.username || '');
@@ -17,7 +18,9 @@ const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentCon
     e.preventDefault();
     
     if (!repoUrl || !token || !username || !email) {
-      alert('Please fill in all required fields');
+      if (onShowToast) {
+        onShowToast('Please fill in all required fields', 'warning');
+      }
       return;
     }
 

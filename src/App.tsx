@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { GitService, GitConfig } from "./services/gitService";
 import { GitHubApiService, GitHubConfig } from "./services/githubApiService";
 import GitConfigComponent from "./components/GitConfig";
+import Toast from "./components/Toast";
 import "./style.css";
 
 type Tab = "tokens" | "git-config" | "history";
@@ -19,6 +20,11 @@ const App: React.FC = () => {
     Array<{ message: string; date: string; author: string }>
   >([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'warning' | 'info'; isVisible: boolean }>({
+    message: '',
+    type: 'info',
+    isVisible: false
+  });
 
   useEffect(() => {
     // Set theme from URL parameters
@@ -82,12 +88,21 @@ const App: React.FC = () => {
 
   const handleSetTokens = () => {
     parent.postMessage({ type: "setTokens", tokens }, "*");
+    showToast("Tokens set successfully!", "success");
   };
 
   const handleTokensChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setTokens(event.target.value);
+  };
+
+  const showToast = (message: string, type: 'success' | 'error' | 'warning' | 'info') => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  const hideToast = () => {
+    setToast(prev => ({ ...prev, isVisible: false }));
   };
 
   const handleGitConfigSave = (config: GitConfig) => {
@@ -109,13 +124,14 @@ const App: React.FC = () => {
     }
 
     localStorage.setItem("penpot-git-config", JSON.stringify(config));
+    showToast("Git configuration saved successfully!", "success");
     setActiveTab("tokens");
   };
 
   const handlePullFromGit = async () => {
     const service = useGitHubApi ? githubService : gitService;
     if (!service) {
-      alert("Please configure Git first");
+      showToast("Please configure Git first", "warning");
       return;
     }
 
@@ -131,11 +147,12 @@ const App: React.FC = () => {
       // Also update the plugin
       parent.postMessage({ type: "setTokens", tokens: tokensToSet }, "*");
 
-      alert("Tokens pulled successfully from Git!");
+      showToast("Tokens pulled successfully from Git!", "success");
     } catch (error) {
       console.error("Error pulling from Git:", error);
-      alert(
+      showToast(
         `Error pulling from Git: ${error instanceof Error ? error.message : "Check console for details"}`,
+        "error"
       );
     } finally {
       setIsLoading(false);
@@ -145,27 +162,28 @@ const App: React.FC = () => {
   const handlePushToGit = async () => {
     const service = useGitHubApi ? githubService : gitService;
     if (!service) {
-      alert("Please configure Git first");
+      showToast("Please configure Git first", "warning");
       return;
     }
 
     if (!tokens.trim()) {
-      alert("No tokens to push");
+      showToast("No tokens to push", "warning");
       return;
     }
 
     setIsLoading(true);
     try {
       await service.pushTokens(tokens);
-      alert("Tokens pushed successfully to Git!");
+      showToast("Tokens pushed successfully to Git!", "success");
       // Refresh history
       if (activeTab === "history") {
         loadCommitHistory();
       }
     } catch (error) {
       console.error("Error pushing to Git:", error);
-      alert(
+      showToast(
         `Error pushing to Git: ${error instanceof Error ? error.message : "Check console for details"}`,
+        "error"
       );
     } finally {
       setIsLoading(false);
@@ -291,6 +309,7 @@ const App: React.FC = () => {
           <GitConfigComponent
             onConfigSave={handleGitConfigSave}
             currentConfig={gitConfig}
+            onShowToast={showToast}
           />
         );
 
@@ -389,6 +408,14 @@ const App: React.FC = () => {
       <div style={{ flex: 1, padding: "var(--spacing-16)" }}>
         {renderTabContent()}
       </div>
+
+      {/* Toast Notification */}
+      <Toast
+        message={toast.message}
+        type={toast.type}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+      />
     </div>
   );
 };
