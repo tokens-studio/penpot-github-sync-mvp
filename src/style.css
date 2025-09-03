@@ -12,3 +12,25 @@ p {
 button {
   background-color: #343a44;
 }
+
+/* Enhanced textarea styling */
+.tokens-textarea {
+  font-variant-ligatures: common-ligatures;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--background-primary);
+  outline: none;
+  border: 1px solid var(--accent-primary-muted);
+  padding: 1rem;
+  border-radius: 5px;
+
+  &:focus {
+    border-color: var(--accent-primary);
+  }
+}
+
+.tokens-textarea::placeholder {
+  color: var(--foreground-secondary);
+  opacity: 0.7;
+}
