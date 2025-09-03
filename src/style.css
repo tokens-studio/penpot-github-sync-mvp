@@ -2,7 +2,6 @@
 
 body {
   line-height: 1.5;
-  padding: 10px;
 }
 
 p {
@@ -33,4 +32,9 @@ button {
 .tokens-textarea::placeholder {
   color: var(--foreground-secondary);
   opacity: 0.7;
+}
+
+.checkbox-container {
+  display: flex;
+  gap: 0.75ch;
 }

@@ -254,9 +254,8 @@ const App: React.FC = () => {
 
             <textarea
               data-appearance="code"
-              rows={12}
+              rows={15}
               className="tokens-textarea"
-              placeholder="Tokens JSON"
               value={tokens}
               onChange={handleTokensChange}
               style={{ width: "100%" }}
