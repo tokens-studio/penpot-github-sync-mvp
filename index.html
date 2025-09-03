@@ -6,7 +6,20 @@
     <title>Penpot plugin example</title>
   </head>
   <body>
-    <button id="getTokens">Get Tokens</button>
+    <div style="display: flex; flex-direction: column; gap: 1rem">
+      <button type="button" data-appearance="primary" id="getTokens">
+        Get
+      </button>
+      <textarea
+        id="tokensEditor"
+        data-appearance="code"
+        rows="10"
+        placeholder="Tokens"
+      ></textarea>
+      <button type="button" data-appearance="primary" id="setTokens">
+        Set
+      </button>
+    </div>
     <!-- <p>Penpot plugin starter template</p>
 
          <p>

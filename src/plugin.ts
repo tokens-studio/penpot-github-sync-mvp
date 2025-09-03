@@ -1,16 +1,14 @@
 penpot.ui.open("Penpot plugin starter template", `?theme=${penpot.theme}`);
 
-penpot.ui.onMessage<string>((message) => {
+penpot.ui.onMessage<any>((message) => {
   if (message === "getTokens") {
     const tokens = penpot.getTokens();
-    console.log(tokens);
+    penpot.ui.sendMessage({
+      source: "penpot",
+      type: "getTokensResult",
+      tokens,
+    });
+  } else if (message.type === "setTokens") {
+    penpot.setTokens(message.tokens);
   }
 });
-
-// penpot.on("themechange", (theme) => {
-//   penpot.ui.sendMessage({
-//     source: "penpot",
-//     type: "themechange",
-//     theme,
-//   });
-// });
