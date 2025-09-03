@@ -6,34 +6,7 @@
     <title>Penpot plugin example</title>
   </head>
   <body>
-    <div style="display: flex; flex-direction: column; gap: 1rem">
-      <button type="button" data-appearance="primary" id="getTokens">
-        Get
-      </button>
-      <textarea
-        id="tokensEditor"
-        data-appearance="code"
-        rows="10"
-        placeholder="Tokens"
-      ></textarea>
-      <button type="button" data-appearance="primary" id="setTokens">
-        Set
-      </button>
-    </div>
-    <!-- <p>Penpot plugin starter template</p>
-
-         <p>
-         Checkout the
-         <a target="_blank" href="https://help.penpot.app/plugins/"
-         >documentation</a
-         >
-         to get started.
-         </p>
-
-         <button type="button" data-appearance="primary" data-handler="create-text">
-         Create text
-         </button> -->
-
-    <script type="module" src="/src/main.ts"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
