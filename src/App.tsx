@@ -258,6 +258,7 @@ const App: React.FC = () => {
               className="tokens-textarea"
               value={tokens}
               onChange={handleTokensChange}
+              spellCheck={false}
               style={{ width: "100%" }}
             />
 

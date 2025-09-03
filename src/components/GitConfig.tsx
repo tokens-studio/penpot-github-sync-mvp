@@ -43,6 +43,7 @@ const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentCon
             onChange={(e) => setRepoUrl(e.target.value)}
             placeholder="https://github.com/user/repo.git"
             required
+            spellCheck={false}
             style={{ width: '100%' }}
           />
         </div>
@@ -56,6 +57,7 @@ const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentCon
             onChange={(e) => setToken(e.target.value)}
             placeholder="ghp_xxxxxxxxxxxx"
             required
+            spellCheck={false}
             style={{ width: '100%' }}
           />
         </div>
@@ -69,6 +71,7 @@ const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentCon
             onChange={(e) => setUsername(e.target.value)}
             placeholder="your-username"
             required
+            spellCheck={false}
             style={{ width: '100%' }}
           />
         </div>
@@ -82,6 +85,7 @@ const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentCon
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your-email@example.com"
             required
+            spellCheck={false}
             style={{ width: '100%' }}
           />
         </div>
@@ -94,6 +98,7 @@ const GitConfigComponent: React.FC<GitConfigProps> = ({ onConfigSave, currentCon
             value={branch}
             onChange={(e) => setBranch(e.target.value)}
             placeholder="main"
+            spellCheck={false}
             style={{ width: '100%' }}
           />
         </div>
