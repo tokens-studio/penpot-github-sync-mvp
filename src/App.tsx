@@ -64,7 +64,7 @@ const App: React.FC = () => {
             // If parsing fails, use the string as-is
           }
         }
-        setTokens(JSON.stringify(tokens, null, 4));
+        setTokens(JSON.stringify(tokens, null, 2));
       }
     };
 
