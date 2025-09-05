@@ -20,10 +20,14 @@ const App: React.FC = () => {
     Array<{ message: string; date: string; author: string }>
   >([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'warning' | 'info'; isVisible: boolean }>({
-    message: '',
-    type: 'info',
-    isVisible: false
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error" | "warning" | "info";
+    isVisible: boolean;
+  }>({
+    message: "",
+    type: "info",
+    isVisible: false,
   });
 
   useEffect(() => {
@@ -97,12 +101,15 @@ const App: React.FC = () => {
     setTokens(event.target.value);
   };
 
-  const showToast = (message: string, type: 'success' | 'error' | 'warning' | 'info') => {
+  const showToast = (
+    message: string,
+    type: "success" | "error" | "warning" | "info",
+  ) => {
     setToast({ message, type, isVisible: true });
   };
 
   const hideToast = () => {
-    setToast(prev => ({ ...prev, isVisible: false }));
+    setToast((prev) => ({ ...prev, isVisible: false }));
   };
 
   const handleGitConfigSave = (config: GitConfig) => {
@@ -145,14 +152,14 @@ const App: React.FC = () => {
       setTokens(tokensToSet);
 
       // Also update the plugin
-      parent.postMessage({ type: "setTokens", tokens: tokensToSet }, "*");
+      // parent.postMessage({ type: "setTokens", tokens: tokensToSet }, "*");
 
       showToast("Tokens pulled successfully from Git!", "success");
     } catch (error) {
       console.error("Error pulling from Git:", error);
       showToast(
         `Error pulling from Git: ${error instanceof Error ? error.message : "Check console for details"}`,
-        "error"
+        "error",
       );
     } finally {
       setIsLoading(false);
@@ -171,6 +178,8 @@ const App: React.FC = () => {
       return;
     }
 
+    console.log("Pushing tokens to git", tokens);
+
     setIsLoading(true);
     try {
       await service.pushTokens(tokens);
@@ -183,7 +192,7 @@ const App: React.FC = () => {
       console.error("Error pushing to Git:", error);
       showToast(
         `Error pushing to Git: ${error instanceof Error ? error.message : "Check console for details"}`,
-        "error"
+        "error",
       );
     } finally {
       setIsLoading(false);
